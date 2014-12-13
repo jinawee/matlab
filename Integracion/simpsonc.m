@@ -13,6 +13,7 @@ function  [i,I]=simpsonc(f,a,b,m)
 f=inline(f);
 
 x=linspace(a,b,2*m+1);
+h=x(2)-x(1);
 
 i2=0;
 i4=0;
@@ -21,4 +22,5 @@ for k=2:2:2*m
     i2=i2+f(x(k+1));
     i4=i4+f(x(k));  
 end
-i=(f(a)+2*i2+4*i4-f(b))*(x(2)-x(1))/3;
+
+i=(f(a)+2*i2+4*i4-f(b))*h/3;

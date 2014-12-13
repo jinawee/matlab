@@ -1,4 +1,4 @@
-function  [i,I]=simpsonc(f,a,b,m)
+    function i=simpsoncvec(f,a,b,m)
 % Regla de Simpson compuesta
 % Sintaxsis:   i=simpsonc(f,a,b,m)
 %
@@ -11,7 +11,13 @@ function  [i,I]=simpsonc(f,a,b,m)
 %  Ejemplo:     i=simpsonc('exp(x)',0,1,10)
 %
 f=inline(f);
-f=vectorize(f)
+f=vectorize(f);
+%h=(b-a)/m;
+%x=linspace(a,b,m+1);
+%i=h/2 *( f(a) + 2*sum(f(x(2:m))) + f(b) );
 x=linspace(a,b,2*m+1);
+h=x(2)-x(1);
 
-I=( f(a)+sum(2*f(x(3:2:2*m-1))) + sum(4*f(x(2:2:2*m)))+f(b) )*(x(2)-x(1))/3
+k=2:2:2*m;
+i= h/3 * ( f(a) + 2*sum(f(x(k+1))) + 4*sum(f(x(k))) - f(b));
+

@@ -34,8 +34,8 @@ for i=1:n
     yn=y+h*eval(F);
     soln=[soln yn];
     if ne==1
-        plot(tn(i+1),yn,'r.');
-        plot([tn(i) tn(i+1)],[y yn],'m.-');
+        plot(t(i+1),yn,'r.');
+        plot([t(i) t(i+1)],[y yn],'m.-');
         axis image
         pause
     end 
