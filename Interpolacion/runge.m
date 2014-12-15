@@ -3,12 +3,17 @@ function runge
 %f=inline('1./(1+x.^2)')
 f=inline('sin(1./x)')
 
-fplot( f ,[-5 5])
+fplot( f ,[-1 1])
 hold on
-for i=6:2:16 , 
-    %x=linspace(-5,5,i) ;
-    x=cheby(i)*5 ;
+for i=20:5:25
+    eq=linspace(-5,5,i) ;
+    x=cheby(i);
     y=f(x) ; 
-    p=ifn(x,y,1)  
+    yeq=f(eq);
+    p=inline(ifn(x,y));
+    peq=inline(ifn(eq,yeq));
+    plot(x,p(x),'g');
+    plot(eq,peq(eq),'r');
     pause
 end
+close all

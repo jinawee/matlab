@@ -34,12 +34,14 @@ syms x
 % formulamos la exactitud de la formula para    x    j=0,...,n-1
 % y resolvemos el sistema lineal.
 m(1,:)=sym(ones(1,n));
+b=zeros(n,1);
 b(1)=sym(0);
 for i=2:n
     m(i,:)=m(i-1,:).*nodos;
     b(i,1)=subs(diff(x^(i-1),k),x,a);
 end
 c=m\b;
+
 if nargout==3  %el tercer argumento de salida es la formula
     fo=0;
     for i=1:n

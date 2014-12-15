@@ -1,4 +1,5 @@
 function [xp, df]=fd(f,a,b,n)
+%function [xp, df]=fd(f,a,b,n)
 %Estimar la funcion DERIVADA de f(x)
 %en los puntos de una particion equiespaciada 
 %del intervalo [a,b] con n puntos
