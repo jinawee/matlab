@@ -21,3 +21,4 @@ h=x(2)-x(1);
 k=2:2:2*m;
 i= h/3 * ( f(a) + 2*sum(f(x(k+1))) + 4*sum(f(x(k))) - f(b));
 
+%Optimizado

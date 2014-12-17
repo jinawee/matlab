@@ -42,7 +42,7 @@ for i=1:n
     yn=soln(:,end)+h/6*(k1+k4+2*(k2+k3));
     if ne==1
         plot([t t+hc],[y y+hc*k1],'m');z(1)=text(t,y,'k1');pause,axis image
-        plot([t+hm t+hm+hc],[y+hm*k1 y+hm*k1+hc*k2],'g');z(2)=text(t+hm,y+hm*k1,'k2');,axis image,pause
+        plot([t+hm t+hm+hc],[y+hm*k1 y+hm*k1+hc*k2],'g');z(2)=text(t+hm,y+hm*k1,'k2'); axis image,pause
         plot([t+hm t+hm+hc],[y+hm*k2 y+hm*k2+hc*k3],'c');z(3)=text(t+hm,y+hm*k2,'k3');axis image,pause
         plot([t+h t+h+hc],[y+h*k3 y+h*k3+hc*k4],'r');z(4)=text(t+h,y+h*k3,'k4');axis image,pause  
         

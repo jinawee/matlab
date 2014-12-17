@@ -15,3 +15,5 @@ for j=2:n
 %        disp(k),disp(j),disp(d(k,j))
     end
 end
+
+%Optimizado

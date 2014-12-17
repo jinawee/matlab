@@ -11,13 +11,14 @@ function [t,y]=rungeKutta(f,t0,tN,y0,N)
 %N: numero de pasos (iguales)
 %
 %t: vector tiempos
-%y: vector  del método de euler explicito
+%y: vector  del mï¿½todo de euler explicito
 %
-%Ejemplo [t,y]=euler('t*y',0,4,1,200)
+%Ejemplo [t,y]=rungeKutta('t*y',0,4,1,200)
 
 t=linspace(t0, tN, N+1);
 h=(tN-t0)/N;
 f=inline(f,'y','t');
+y=zeros(N,1);
 y(1)=y0;
 for i=1:N
     K1=f( y(i),t(i) );
@@ -27,4 +28,6 @@ for i=1:N
     paso=(K1+2*K2+2*K3+K4)/6;
     y(i+1) = y(i) + h*paso ;
 end
+
+%Hecho en clase
     

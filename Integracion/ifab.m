@@ -5,7 +5,7 @@ function d=ifab(f,coef,nodos)
 % f       funcion como cadena de caracteres
 %                                                  
 % coef    coeficientes de la formula para estimar la integral
-%         la integral de la función f en el intervalo [a,b]
+%         la integral de la funciï¿½n f en el intervalo [a,b]
 % nodos   vector de nodos base
 %
 %                                
@@ -14,5 +14,4 @@ function d=ifab(f,coef,nodos)
 % Ejemplo     [c,n]=cfin([0 .5 1],[0,1]) ; d = ifab('sin(x)',c,n)
 
 f=vectorize(inline(f));
-% la formula se calcula como un producto matricial
-d=f(nodos)*coef;
+d=f(nodos)*coef; % la formula se calcula como un producto matricial

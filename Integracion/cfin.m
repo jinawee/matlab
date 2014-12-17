@@ -34,12 +34,12 @@ end
 % y resolvemos el sistema lineal.
 m(1,:)=sym(ones(1,n));
 %B(1)=sym(b-a);
-B(1)=int(w,a,b)
+B(1)=int(w,a,b);
 
 for i=2:n
     m(i,:)=m(i-1,:).*nodos;
 %    B(i,1)=(b^i-a^i)/i;
-    B(i,1)=int(x^(i-1)*w,a,b)
+    B(i,1)=int(x^(i-1)*w,a,b);
 end
 c=m\B;
 if nargout==3  %el tercer argumento de salida es la formula

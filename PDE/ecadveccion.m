@@ -6,14 +6,11 @@ function [x,u]=ecadveccion(t0,tf,nt,a,b,nx,ci,cca,ccb,c,graficasi,cada)
 x=linspace(a,b,nx); dx=x(2)-x(1); x=x';
 t=linspace(t0,tf,nt); dt=t(2)-t(1); t=t';
 r=-dt*c/(2*dx); 
-dt
-dx
 
 %Crea la matriz A
 disp('Creando A')
 A=diag(ones(nx,1),0)+diag(-r*ones(nx-1,1),1)+diag(r*ones(nx-1,1),-1);
 A(1,1)=1; A(nx,nx)=1; A(1,2)=0; A(nx,nx-1)=0;
-
 
 disp('Creando u')
 ci=inline(ci,'x');

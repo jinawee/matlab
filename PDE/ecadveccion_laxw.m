@@ -1,6 +1,8 @@
-function [x,u]=ecadveccion(t0,tf,nt,a,b,nx,ci,cca,ccb,c,graficasi,cada)
+function [x,u]=ecadveccion_laxw(t0,tf,nt,a,b,nx,ci,cca,ccb,c,graficasi,cada)
 %function [x,u]=ecadveccion(t0,tf,nt,a,b,nx,ci,cca,ccb,c,graficasi,cada)
 %graficasi=0 solo es valido para condiciones de contorno constantes en el tiempo
+%NOTA: añadir argumento para condiciones de contorno periodicas en vez de
+                                                               %Dirichlet
 
 %Crea el vector de tiempos y espacios. Crea "r" y "1-2*r".
 x=linspace(a,b,nx); dx=x(2)-x(1); x=x';
@@ -18,8 +20,7 @@ end
 %Crea la matriz A
 disp('Creando A')
 A=diag((1-4*r^2)*ones(nx,1),0)+diag(r*(-1+2*r)*ones(nx-1,1),1)+diag(r*(1+2*r)*ones(nx-1,1),-1);
-A(1,1)=1; A(nx,nx)=1; A(1,2)=0; A(nx,nx-1)=0;
-
+A(1,1)=0; A(nx,nx)=0; A(1,2)=1; A(nx,nx-1)=0; A(nx,1)=1; %Condicion de contorno periodica
 
 disp('Creando u')
 ci=inline(ci,'x');
@@ -48,14 +49,14 @@ if graficasi==1  %Si queremos ver paso a paso la sol.
         ccb(1:nt)=ccb;
     end
     u(1)=cca(1); u(end)=ccb(1); %Sustituye las condiciones de contorno en la distribución inicial
-    
     z=ones(length(u),nt); %Reserva espacio para la superficie
     z(:,1)=u; %Almacena primera distribucion de temperaturas para la superficie
     
     disp('Calculando la solucion')
     for i=1:nt-1
         u=A*u;
-        u(1)=cca(i); u(end)=ccb(i);
+        %u(1)=cca(i); u(end)=ccb(i); Descomentar si no se quieren
+                                    %condiciones de contorno periodicas
         z(:,i+1)=u; %Almacena nueva distribucion de temp. para la superficie
     end
    
@@ -67,7 +68,7 @@ if graficasi==1  %Si queremos ver paso a paso la sol.
     for i=1:nt-1 %Muestra nueva distribución
         if mod(i,cada)==0
             set(gra,'ydata',z(:,i)); 
-       %     pause;
+            pause;
         end
     end
     
