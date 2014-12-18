@@ -1,4 +1,4 @@
-function p=ifn(xp,yp,r)
+function p=ifn(xp,yp,~)
 % Sintaxis   p = ifn (x,y)
 %
 % x abscisas
