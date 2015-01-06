@@ -27,7 +27,7 @@ u=double(ci(x));
 
 z=ones(length(u),nt); %Reserva espacio para la superficie
 z(:,1)=u; %Almacena primera distribucion de temperaturas para la superficie
-    
+
 disp('Calculando la solucion')
 for i=1:nt-1
     u=A*u;
@@ -47,8 +47,6 @@ pause
 for i=1:nt-1 %Muestra nueva distribución
     if mod(i,cada)==0
         set(gra,'ydata',z(:,i)); 
-       % pause;
-       
     end
 end
 
