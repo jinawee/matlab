@@ -1,12 +1,19 @@
-function [u,E]=eccalor2(t0,tf,nt,a,b,nx,ci,cca,ccb,cada,graficasi,lamb)
-%function [u,E]=eccalor2(t0,tf,nt,a,b,nx,ci,cca,ccb,graficasi,lamb)
+function [u]=ecfuentes(t0,tf,nt,a,b,nx,ci,cca,ccb,cada,graficasi,lamb)
+%function [u]=ecfuentes(t0,tf,nt,a,b,nx,ci,cca,ccb,cada,graficasi,lamb)
 %graficasi=0 solo es valido para condiciones de contorno constantes en el tiempo
 %lamb: es el vector con las constantes de difusión
+%a=[13.1*ones(25,1);130*ones(50,1);60*ones(50,1);13.1*ones(25,1)].*10^-6
+
+%Datos
+sigma=15e-2;
+Q0=0.4;
+Q=@(x)exp(-((x-0.75)./sigma).^2)*Q0;
 
 %Crea el vector de tiempos y espacios. Crea "r" y "1-2*r".
 x=linspace(a,b,nx); dx=x(2)-x(1); x=x';
 t=linspace(t0,tf,nt); dt=t(2)-t(1); t=t';
-r=dt/dx^2*lamb(1); 
+r=dt/dx^2*max(lamb);  %r solo se usa en el test de estabilidad
+
 
 %Test de estabilidad
 if r>.5
@@ -17,12 +24,6 @@ if r>.5
 end
 
 
-%a=[13.1*ones(25,1);130*ones(50,1);60*ones(50,1);13.1*ones(25,1)].*10^-6
-
-
-
-%%ENERGIA
-E=ones(nt,1);
 
 %Crea la matriz A
 disp('Creando A')
@@ -36,6 +37,7 @@ diagsup=D*diag(lminus,1); diagsup=diagsup(1:end-1,1:end-1);
 A=diagonal+diaginf+diagsup;
 
 A(1,1)=1; A(nx,nx)=1; A(1,2)=0; A(nx,nx-1)=0;
+ 
 
 disp('Creando u')
 ci=inline(ci,'x'); %Crea el vector condición inicial 
@@ -44,6 +46,9 @@ if length(u)==1
     u(1:nx)=u;
     u=u';
 end
+
+disp('Creando Q')
+Q=Q(x);
 
 
 disp('Creando cond. contorno')
@@ -54,9 +59,14 @@ cca=cca(t); ccb=ccb(t);
 if graficasi==0 %Si no queremos ver paso a paso la sol. 
     u(1)=cca(1); u(end)=ccb(1);
     disp('Calculando la solucion')
-    tic
-    u=A^nt*u;
-    toc
+    Id=ones(nx,nx)^0;
+    disp('Matriz casi singular')
+   % det(A);
+   % serie=(Id-A)^-1*(Id-A^(nt-1));
+   % serie=zeros(nx);
+    for i=1:nt-1
+       u=A*u+dt*Q;
+    end
     plot(x,u)
     pause
     close all
@@ -75,15 +85,13 @@ if graficasi==1  %Si queremos ver paso a paso la sol.
     z(:,1)=u; %Almacena primera distribucion de temperaturas para la superficie
     
     disp('Calculando la solucion')
-
+    tic
     for i=1:nt-1
-            tic
-        u=A*u;
+        u=A*u+Q*dt;
         u(1)=cca(i); u(end)=ccb(i);
         z(:,i+1)=u; %Almacena nueva distribucion de temp. para la superficie
-       
     end
-    
+    toc
     
     disp('Empieza graficas y calcula E')
     gra=plot(x,z(:,1),'erasemode','xor'); %Grafica de la condición incial
@@ -91,26 +99,17 @@ if graficasi==1  %Si queremos ver paso a paso la sol.
     pause
     
     for i=1:nt-1 %Muestra nueva distribución
-        %if mod(i,cada)==0
-        %    set(gra,'ydata',z(:,i)); 
-        %end
-        sumar=(lamb').*((z(:,i)-circshift(z(:,i),[1,1])).^2 ); 
-       
-        suma=sum(sumar(2:nx));
-        E(i,1)=1/(2*dx)* (suma);
+        if mod(i,cada)==0
+            set(gra,'ydata',z(:,i)); 
+        end
     end
     
     pause
     close all
 
-%    figure
-%    surfc(z);shading interp; colormap(hot);set(gca,'ydir','reverse');
-%    rotate  3d
+    figure
+    surfc(z);shading interp; colormap(hot);set(gca,'ydir','reverse');
 
-    pause
-    close all
-    
-    plot(t,E)
     pause
     close all
 end
