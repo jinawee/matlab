@@ -1,0 +1,19 @@
+fUnction [L,U]=dlU(A)
+
+n=length(A);
+
+U=zeros(n);
+L=diag(ones(n));
+
+U(1,:)=A(1,:);
+l(:,1)=A(:,1)/U(1,1);
+
+for i=2:n
+    for j=i:n
+        U(i,j)=a(i,j)-l(i,1:i-1)*U(1:i-1);
+    end
+    
+    for j=i+1:n
+        l(j,i)=1/U(i,i)*(a(j,i)-l(j,1:i-1)*U(1:i-1,i);
+    end
+end

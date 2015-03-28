@@ -1,0 +1,27 @@
+1.Interpolación numérica
+    -Interpolación de Lagrange. Cotas de error.
+    -Interpolación de Newton. Diferencias dividas.
+    -Efecto borde. Polinomios de Chevyshev.
+
+2.Derivación e integración
+   Derivación
+    -f'(x) con f(x) y f(x+h)
+    -f'(x) con f(x-h) y f(x+h)
+    -f''(x) con f(x), f(x-h), f(x+h)
+    -Inestabilidad del proceso de derivación numérica
+    -Método directo. Estabilidad.
+   Integración
+    -Integración del interpolante. Error.
+    -Fórmula de Newton-Cotes. Tª del valor medio generalizado.
+    -Fórmula del trapecio.
+    -Regla de Simpson. Error.
+    -Método directo. 
+    -Máxima exactitud.
+    -Fórmula de integración compuesta. Simpson compuesta.
+
+3.Ecuaciones diferenciales ordinarias
+    -Método de Euler.
+    -Métodos de un paso. Definiciones y teoremas.
+    -Métodos de Runge-Kutta explícitos.
+
+4.Ecuaciones en derivadas parciales

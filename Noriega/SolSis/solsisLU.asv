@@ -1,0 +1,8 @@
+function sol=solsisLU(A,b)
+
+assert(det
+[L,U]=dlu(A);
+y=trianginf(L,b);
+sol=triangsup(U,y);
+
+  

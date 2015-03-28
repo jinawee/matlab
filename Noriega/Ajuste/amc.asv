@@ -1,0 +1,22 @@
+function [p,c]=amc(xp,yp,n)
+%Ajuste por mínimos cuadrados
+%
+%Entrada
+%xp: puntos de abscisas
+%yp: puntos de ordenadas
+%n:  n es el grado máximo del polinomio de ajuste
+%
+%Exemplo
+
+B=ones(n+1,length(xp));
+for i=2:n+1
+   
+    B(i,:)=B(i-1,:).*xp;
+end
+B
+G=B*B';
+
+h=B*yp';
+c=G\h;
+
+p=poly2sym(c)

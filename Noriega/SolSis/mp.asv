@@ -1,0 +1,13 @@
+function x=mp(A,x,nit)
+
+for i=1:nit
+  x=A*x;
+  x=x/norm(x);
+end
+
+x=x(x~=0);
+w=A*x;
+w=w(x~=0);
+
+lambda=w./x;
+disp(num2str(mean(lambda)))

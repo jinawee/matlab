@@ -1,0 +1,25 @@
+d=0.5e1;
+dp=0.5e1;
+a=0.3e-3;
+lo=500-9;
+k=2*pi/lo;
+x0=1e-2;
+L=1/(1/d+1/dp);
+
+rp=@(y)sqrt(y.^2+dp^2);
+r=@(x,y)sqrt((x-y).^2+d^2);
+cosnr=@(x,y)d./r(x,y); cosnrp=@(y)dp./rp(y);
+%f=@(x,y) exp( 1i*k*( r(x,y)+rp(y) ) ) .* ( cosnr(x,y)- cosnrp(y) ) ./ ( r(x,y) .* rp(y) ); 
+f=@(x,y) exp( 1i*k*( r(x,y)+rp(y) ) ); 
+f=@(x,y) exp( 1i*k*( rp)+rp(y) ) ); 
+nx=100;
+E=zeros(nx,1);
+E2=zeros(nx,1);
+xval=linspace(-x0,x0,nx);
+I=@(x) quad(@(y) f(x,y) ,-a/2,a/2);
+for i=1:nx
+    E(i)=quad(@(y) f(xval(i),y) ,-a/2,a/2);
+    E2(i)=I(xval(i));%quad(@(x) exp(1i*k*x.^2/(2*L)) ,xval(i)-a/2,xval(i)+a/2);
+
+end
+

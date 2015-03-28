@@ -1,0 +1,44 @@
+%CTES
+%%%%%%%%%%%%%%%%%%%%
+lo=1;       %longitud de onda
+c=3e8;      %velocidad de la luz
+
+dz=lo/10;   %tamaño del intervalo espacial
+dt=dz/(2*c);%tamaño del intervalo temporal
+tau=lo/c;   %periodo de la onda
+nz=100; nt=100; %número de nodos espaciales y temporales
+t0=2.5*tau; %localizacion del pulso gaussiano
+sigma=0.5*tau; %dispersion del pulso
+%t=0:dt:nt*dt;
+t=0;        %tiempo inicial  
+z=dz*(1:nz); %Pq el factor
+%inicializa los vectores de campo E y H
+E=zeros(1,nz); H=zeros(1,nz);
+
+zf=nz*dz*1e6; %posicion final
+
+for n=1:nt
+    for i=2:nz-1 %Calcula E en todos los puntos menos en los extremos
+        E(i)=E(i)+0.5*( H(i-1)-H(i) );
+    end 
+        %Inserta fuente
+        E(50)=E(50)+exp(-0.5*((t-t0)/sigma).^2) ;
+    for i=1:nz-1 %Calcula H
+        H(i)=H(i)+0.5*( E(i)-E(i+1) );
+    end
+    
+    %GRAFICAS
+    axis([0 zf -1 1]);
+    length(z)
+    length(E)
+    plot(z/1e-6,E)
+    axis([0 zf -1 1]);
+    frame=getframe(gca);
+    t=n*dt;
+end
+    
+    
+    
+    
+    
+

@@ -1,0 +1,5 @@
+function f=mpo(F)
+%Devuelve la función de las proyecciones ortogonales
+%Entrada de la función como string y 
+Fp=char(diff(F));
+f=['x-', F,'*',Fp,'*1+(',Fp,')^2'];

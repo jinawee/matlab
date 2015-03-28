@@ -1,0 +1,3 @@
+function f=mac(F)
+%F: funcion como cadena de caracteres
+%f: funcion como cadena de caracteres
